@@ -1,153 +1,150 @@
-# Feature-conditioned spectral operators for 1D advection
+# Interface-Conditioned Fourier Neural Operators
 
-This project compares linear Fourier operators for interface-aware advection on
+Structured linear Fourier/Green operators for learning PDE solution maps with known interfaces or discontinuity features.
 
-$$
-u_t + c u_x = 0,
-\qquad x \in [-1,1],
-\quad t \in [0,1],
-\quad c=0.5.
-$$
+> **Project status:** this repository is an early, controlled validation of the method. The current 1D advection study provides mechanism-level evidence, not a final claim of performance across PDE classes.
 
-The primary models are
+## Core idea
+
+Classical Fourier neural operators use a translation-invariant spectral kernel. A known discontinuity feature can instead condition the kernel at both its source and target points:
 
 $$
-\mathcal T_{\mathrm{shared}}u_0
-=a\mathcal Ku_0+b\gamma_1\mathcal K(\gamma_0u_0),
+G_\gamma(x,y)=\kappa_0(x-y)+\gamma_{\mathrm{out}}(x)\kappa_1(x-y)\gamma_{\mathrm{in}}(y).
 $$
 
-and
+The corresponding single-layer linear operator is
 
 $$
-\mathcal T_{\mathrm{dual}}u_0
-=\mathcal K_0u_0+\gamma_1\mathcal K_1(\gamma_0u_0).
+\mathcal T_\gamma f
+=\mathcal K_0f+\gamma_{\mathrm{out}}\mathcal K_1\bigl(\gamma_{\mathrm{in}}f\bigr),
 $$
 
-The parameter-matched generic two-channel baseline is
+where $\mathcal K_0$ and $\mathcal K_1$ are learned Fourier multipliers. The feature is therefore not merely concatenated as another input channel: it selects interactions at the input side and gates the result at the output side. A discontinuous pullback kernel can thus be obtained from smooth translation-invariant spectral kernels.
+
+For a binary feature, the shared-multiplier special case is
 
 $$
-\mathcal T_{\mathrm{2ch}}(u_0,\gamma_0)
-=\mathcal K_u u_0+\mathcal K_\gamma\gamma_0.
-$$
-
-It is a standard single-layer linear two-input-channel, one-output-channel
-Fourier operator. It deliberately does not use the structured product
-$\gamma_0u_0$ or the output gate $\gamma_1$. Its two independent multipliers
-give it exactly the same parameter count as `dual`, isolating the benefit of
-the Dual factorization from a generic extra input channel.
-
-The linear hidden-width control is
-
-$$
-h_1=\mathcal K_1u_0,
+\mathcal T_{\mathrm{shared}}f
+=a\mathcal Kf+b\gamma_{\mathrm{out}}\mathcal K\bigl(\gamma_{\mathrm{in}}f\bigr),
 \qquad
-h_2=\mathcal K_2u_0,
-\qquad
-\mathcal T_{\mathrm{width2}}u_0=h_1+h_2.
+a=\frac{1+\rho}{2},\quad b=\frac{1-\rho}{2}.
 $$
 
-Because
+Both forms require only two spectral convolutions. The feature determines the possible jump location; the learned multipliers determine the jump amplitude and smooth structure on each side.
+
+## Current testbed: 1D linear advection
+
+The first testbed is the nonperiodic, constant-velocity advection equation
 
 $$
-\mathcal K_1u_0+\mathcal K_2u_0
-=(\mathcal K_1+\mathcal K_2)u_0,
+u_t+c u_x=0,\qquad x\in[-1,1],\quad t\in[0,1],\quad c=0.5,
 $$
 
-`hidden_width_2` has twice the stored multiplier parameters but exactly the
-same linear function class as `plain`. It is a negative control for whether
-parameter duplication alone explains any gain. The two branches are
-non-identifiable, so fitting uses the minimum-norm split
-$\mathcal K_1=\mathcal K_2=\mathcal K_{\mathrm{eff}}/2$. Its per-branch ridge
-coefficient is doubled, making the effective regularization on
-$\mathcal K_{\mathrm{eff}}$ equal to the `plain` ridge coefficient.
-
-The secondary ablation `shared_learnable_rho` keeps the single-layer shared
-operator but learns its cross-interface coupling:
+whose solution is known exactly:
 
 $$
-\rho=\mathrm{sigmoid}(\eta),
-\qquad
-a=\frac{1+\rho}{2},
-\qquad
-b=\frac{1-\rho}{2}.
+u(x,T)=u_0(x-cT).
 $$
 
-It jointly optimizes the scalar $\eta$ and the shared Fourier multiplier. The
-fixed-$\rho$ `shared` model remains unchanged and is still fit by deterministic
-ridge regression. The learned model saves both the final `rho` and its
-unconstrained `rho_eta` value in `models/*.npz`. Each fit learns one global
-$\rho$ for one stage, seed, and retained-mode budget; it is not sample-dependent.
+Each initial condition contains at most one jump. The binary interface features satisfy
 
-Here $\gamma_0$ marks the initial interface and
-$\gamma_1(x)=\gamma_0(x-cT)$ marks the transported interface. The benchmark
-uses an inflow-outflow formulation so every interior two-plateau sample has one
-physical jump. Samples with $s=-1$ or $s=1$ use constant $\gamma$ and are
-continuous controls.
+$$
+\gamma_1(x)=\gamma_0(x-cT).
+$$
 
-## What is model input?
+The inflow--outflow boundary condition makes samples with $s=\pm1$ genuine continuous controls on the open physical interval. Two data stages are evaluated:
 
-`plain`, `wide_plain`, and `hidden_width_2` use only `u0`. `two_channel_fno`
-uses the two channels `u0` and `gamma0`. The structured `shared`,
-`shared_learnable_rho`, and `dual` models use `u0`, `gamma0`, and `gamma1` in
-their prescribed multiplications. The stored metadata (`s`, `J`, `c`, `T`,
-smooth coefficients, endpoint flags, seeds) is used to regenerate samples and
-stratify metrics; it is not passed to the operator.
+- **Stage A:** a two-plateau jump, isolating discontinuity recovery.
+- **Stage B:** a compact smooth background plus a jump, testing simultaneous smooth and discontinuous reconstruction.
 
-## Local verification
+## Implemented models
 
-The configured local environment is CPU-only JAX:
+| Model | Operator | Purpose |
+|---|---|---|
+| `plain` | $\mathcal Ku_0$ | Standard one-channel linear Fourier baseline. |
+| `hidden_width_2` | $\mathcal K_1u_0+\mathcal K_2u_0$ | Negative control: it has duplicated parameters but the same linear function class as `plain`. |
+| `two_channel_fno` | $\mathcal K_u u_0+\mathcal K_\gamma\gamma_0$ | Parameter-matched generic two-input-channel baseline; it has no product feature or output gate. |
+| `wide_plain` | $\mathcal K_{2M}u_0$ | Ordinary baseline with twice the retained spectral modes. |
+| `shared` | $a\mathcal Ku_0+b\gamma_1\mathcal K(\gamma_0u_0)$ | Structured interface operator with a shared multiplier. |
+| `shared_learnable_rho` | `shared` with learned $\rho$ | Tests whether the cross-interface coupling should be learned. |
+| `dual` | $\mathcal K_0u_0+\gamma_1\mathcal K_1(\gamma_0u_0)$ | Main two-multiplier interface-conditioned operator. |
 
-```powershell
-C:\Users\Hollon\miniconda3\envs\jax\python.exe -m unittest discover -s tests -v
-C:\Users\Hollon\miniconda3\envs\jax\python.exe -m advection_fno.experiment --preset smoke --stage all --output-dir results/smoke
+All fixed models are fitted by ridge-regression normal equations. `shared_learnable_rho` jointly optimizes a global scalar $\rho$ and its shared multiplier.
+
+## Initial evidence
+
+The committed results are a single-seed smoke experiment at $N=32$ and retained mode budget $M=8$. Lower is better.
+
+| Model | Stage A relative $L^2$ | Stage B relative $L^2$ | Interpretation |
+|---|---:|---:|---|
+| `plain` | 0.2179 | 0.1718 | Standard spectral baseline. |
+| `wide_plain` | 0.1379 | 0.1101 | More modes help, but do not close the gap. |
+| `shared` | 0.1035 | 0.0942 | The structured shared kernel is substantially better. |
+| `dual` | **0.0988** | **0.0721** | Best current model in both stages. |
+
+At $M=8$, `dual` reduces relative $L^2$ error versus `plain` by 54.7% in Stage A and 58.0% in Stage B. It also improves over `wide_plain`, while `hidden_width_2` is numerically identical to `plain` and the generic `two_channel_fno` remains close to `plain`. These controls support the intended explanation: the gain comes from the structured feature interaction, not simply from more parameters or an extra channel.
+
+The same experiment also establishes the current limitation: performance is sensitive to a wrong, shifted, or smoothed output interface, and independently trained feature models do not yet preserve `plain`-level error on all continuous endpoint controls. The result is promising but not yet publication-grade evidence.
+
+## Tests and result artefacts
+
+| Item | What it checks | Link |
+|---|---|---|
+| Data tests | Exact advection transport, internal/endpoint interfaces, and dataset serialization. | [`test_data.py`](advection_fno/tests/test_data.py) |
+| Model-identity tests | Fourier design matrices, `shared` identities, learnable $\rho$, two-channel mixing, and the width-two equivalence. | [`test_models.py`](advection_fno/tests/test_models.py) |
+| End-to-end smoke test | Generation, fitting, evaluation, and saved experiment outputs. | [`test_smoke.py`](advection_fno/tests/test_smoke.py) |
+| Full 1D test report | Method, protocol, figures, ablations, endpoint controls, and limitations. | [1D advection equation test report](advection_fno/1D%20advection%20equation%20test%20report.md) |
+| Aggregate metrics | Per-model mean/median metrics for every suite. | [`summary.csv`](advection_fno/results/smoke_hidden_width_2/summary.csv) |
+| Paired comparisons | Bootstrap comparisons against `plain` and parameter-matched controls. | [`comparisons.csv`](advection_fno/results/smoke_hidden_width_2/comparisons.csv) |
+| Run configuration | Dataset, model, precision, environment, and runtime metadata. | [`manifest.json`](advection_fno/results/smoke_hidden_width_2/manifest.json) |
+| Visual results | Error-versus-mode curve and representative Stage A/B predictions. | [figures](advection_fno/results/smoke_hidden_width_2/figures) |
+
+Only the compact, citable smoke bundle is versioned. Large sample arrays, fitted weights, logs, and other exploratory runs are deliberately ignored by Git.
+
+## Repository layout
+
+```text
+advection_fno/
+├── config.py                         # Experiment presets and configuration
+├── data.py                           # Analytic advection data generation
+├── models.py                         # Linear spectral operators and ridge fits
+├── metrics.py                        # Errors, diagnostics, and comparisons
+├── experiment.py                     # Command-line experiment entry point
+├── tests/                            # Unit and smoke tests
+├── results/                          # Local outputs; only one compact bundle is tracked
+└── 1D advection equation test report.md
 ```
 
-The smoke preset is intentionally small. It exercises both data stages, all
-models, the $\rho$ scan, interface diagnostics, and report generation.
+## Reproduce the smoke experiment
 
-## Formal GPU run
-
-On a Linux NVIDIA server, install a GPU-enabled JAX build appropriate for the
-driver. The current official JAX documentation recommends pip-provided CUDA
-wheels, for example `jax[cuda13]` or `jax[cuda12]`. Check the live instructions
-before installation:
-
-<https://docs.jax.dev/en/latest/installation.html>
-
-Verify that JAX sees a GPU:
+Install the package and its dependencies in a JAX-capable Python environment:
 
 ```bash
-python -c "import jax; print(jax.devices())"
+pip install -e .
 ```
 
-Then run the registered experiment:
+Run the checks and a fresh smoke experiment from the repository root:
 
 ```bash
+python -m unittest discover -s advection_fno/tests -v
+
 python -m advection_fno.experiment \
-  --preset full \
+  --preset smoke \
   --stage all \
-  --output-dir results/full \
+  --output-dir advection_fno/results/smoke_local \
   --save-data \
   --x64
 ```
 
-`--x64` improves the conditioning audit for deterministic ridge fitting but can
-be slower on GPUs with weak FP64 throughput. Run once without it only as a
-performance diagnostic; use the same precision setting for every compared
-model.
+For the planned multi-seed GPU study, replace `smoke` with `full` and use a separate ignored output directory such as `advection_fno/results/full`.
 
-## Outputs
+## Next steps
 
-- `manifest.json`: configuration, environment, devices, seeds, and duration.
-- `metrics.csv`: one row per evaluated sample.
-- `summary.csv`: grouped mean and median metrics.
-- `comparisons.csv`: paired bootstrap comparisons against plain and
-  parameter-matched baselines, including `dual` versus `two_channel_fno` and
-  `dual` versus `hidden_width_2`.
-- `models/*.npz`: learned complex Fourier multipliers and fit diagnostics.
-- `datasets/*.npz`: generated arrays when `--save-data` is supplied.
-- `figures/*.png`: representative predictions and error-vs-mode curves.
+- Repeat the benchmark at higher resolution with multiple training seeds and seed-level uncertainty estimates.
+- Include continuous controls during model selection and test constraints or reliability gating for absent interfaces.
+- Evaluate imperfect or predicted interfaces, variable transport, and nonlinear conservation laws.
+- Extend the feature-conditioned kernel view beyond the current single-layer linear operator.
 
-The primary acceptance rule is a minimum 20% reduction in both interface MAE
-and overshoot, with a paired 95% bootstrap interval above zero, while preserving
-continuous endpoint performance.
+## License
+
+This project is released under the [MIT License](LICENSE).

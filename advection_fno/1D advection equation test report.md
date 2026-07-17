@@ -1,4 +1,4 @@
-# 特征条件化 Fourier 算子在一维对流间断问题上的测试总结
+# 1D Advection Equation Test Report
 
 ## Material Passport
 
@@ -18,7 +18,7 @@
 
 同时，本次结果也暴露出一个重要限制：对于端点连续控制样本，独立训练的特征模型并没有自动匹配独立训练 `plain` 的连续情形误差。因此，当前模型已显示出处理**已知、正确输运的内部界面**的潜力，但还不能声称它在“界面不存在或界面信息失真”时保持同等稳健性。
 
-相关原始结果可在 [`summary.csv`](results/smoke_hidden_width_2/summary.csv)、[`comparisons.csv`](results/smoke_hidden_width_2/comparisons.csv) 和 [`manifest.json`](results/smoke_hidden_width_2/manifest.json) 中复查；模型和实验逻辑分别见 [`models.py`](advection_fno/models.py) 与 [`experiment.py`](advection_fno/experiment.py)。
+相关原始结果可在 [`summary.csv`](results/smoke_hidden_width_2/summary.csv)、[`comparisons.csv`](results/smoke_hidden_width_2/comparisons.csv) 和 [`manifest.json`](results/smoke_hidden_width_2/manifest.json) 中复查；模型和实验逻辑分别见 [`models.py`](models.py) 与 [`experiment.py`](experiment.py)。
 
 ## 2. 理论方法
 

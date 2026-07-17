@@ -22,16 +22,20 @@ Thumbs.db
 # Source screenshots retained locally; they are not project source files.
 /资料/
 
-# Ignore all experiment outputs by default. Keep one compact, citable smoke
-# result bundle so that the test report renders on GitHub.
-/results/*
-!/results/smoke_hidden_width_2/
-/results/smoke_hidden_width_2/*
-!/results/smoke_hidden_width_2/summary.csv
-!/results/smoke_hidden_width_2/comparisons.csv
-!/results/smoke_hidden_width_2/manifest.json
-!/results/smoke_hidden_width_2/figures/
-!/results/smoke_hidden_width_2/figures/*.png
+# Local agent instructions are workspace-specific and must not be published.
+/AGENTS.md
+
+# Ignore experiment outputs by default. Keep one compact, citable smoke result
+# bundle so that the README and test report render on GitHub.
+/results/
+/advection_fno/results/*
+!/advection_fno/results/smoke_hidden_width_2/
+/advection_fno/results/smoke_hidden_width_2/*
+!/advection_fno/results/smoke_hidden_width_2/summary.csv
+!/advection_fno/results/smoke_hidden_width_2/comparisons.csv
+!/advection_fno/results/smoke_hidden_width_2/manifest.json
+!/advection_fno/results/smoke_hidden_width_2/figures/
+!/advection_fno/results/smoke_hidden_width_2/figures/*.png
 
 # Large training artifacts and machine-local logs
 *.ckpt

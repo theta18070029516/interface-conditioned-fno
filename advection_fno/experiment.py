@@ -26,7 +26,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--preset", choices=sorted(PRESETS), default="smoke")
     parser.add_argument("--stage", choices=("A", "B", "all"), default="all")
-    parser.add_argument("--output-dir", type=Path, default=Path("results/advection_feature_fno"))
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("advection_fno/results/advection_feature_fno"),
+    )
     parser.add_argument("--ridge", type=float, default=1.0e-8)
     parser.add_argument("--save-data", action="store_true")
     parser.add_argument("--x64", action="store_true", help="Enable JAX float64 before computation")
