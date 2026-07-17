@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.egg-info/
+build/
+dist/
+
+# Local Python environments and editor state
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Source screenshots retained locally; they are not project source files.
+/资料/
+
+# Ignore all experiment outputs by default. Keep one compact, citable smoke
+# result bundle so that the test report renders on GitHub.
+/results/*
+!/results/smoke_hidden_width_2/
+/results/smoke_hidden_width_2/*
+!/results/smoke_hidden_width_2/summary.csv
+!/results/smoke_hidden_width_2/comparisons.csv
+!/results/smoke_hidden_width_2/manifest.json
+!/results/smoke_hidden_width_2/figures/
+!/results/smoke_hidden_width_2/figures/*.png
+
+# Large training artifacts and machine-local logs
+*.ckpt
+*.pth
+*.pt
+*.log

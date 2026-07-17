@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "preset": "smoke",
+  "stages": [
+    "A",
+    "B"
+  ],
+  "config": {
+    "x_min": -1.0,
+    "x_max": 1.0,
+    "final_time": 1.0,
+    "velocity": 0.5,
+    "n_x": 32,
+    "smooth_terms": 3,
+    "smooth_support": 0.75,
+    "smooth_amplitude": 0.2,
+    "mean_low": -0.5,
+    "mean_high": 0.5,
+    "jump_abs_low": 0.5,
+    "jump_abs_high": 1.5,
+    "pad_fraction": 0.5
+  },
+  "modes": [
+    4,
+    8
+  ],
+  "models": [
+    "plain",
+    "wide_plain",
+    "hidden_width_2",
+    "two_channel_fno",
+    "shared",
+    "shared_learnable_rho",
+    "dual"
+  ],
+  "rho_scan": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "learnable_rho": {
+    "initial": 0.5,
+    "steps": 1000,
+    "learning_rate": 0.02,
+    "parameterization": "rho = sigmoid(eta)"
+  },
+  "seeds": [
+    0
+  ],
+  "ridge": 1e-08,
+  "x64": true,
+  "devices": [
+    "cpu:0"
+  ],
+  "python": "3.11.15 | packaged by Anaconda, Inc. | (main, Jun 11 2026, 15:12:53) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "jax_version": "0.10.2",
+  "duration_seconds": 6.4552817000076175,
+  "output_files": [
+    "metrics.csv",
+    "summary.csv",
+    "comparisons.csv"
+  ]
+}
