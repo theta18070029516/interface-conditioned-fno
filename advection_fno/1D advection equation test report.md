@@ -49,7 +49,8 @@ $$
 普通单层线性谱算子可写成
 
 $$
-[\mathcal Kf](x)=\mathcal F^{-1}\!\left[R(k)\widehat f(k)\right](x).
+\bigl(\mathcal K f\bigr)(x)
+= \mathcal F^{-1}\!\left[ R(k)\widehat{f}(k) \right](x).
 $$
 
 本测试的关键不是把 $\gamma$ 作为普通附加通道，而是让它出现在核的输入端与输出端：
