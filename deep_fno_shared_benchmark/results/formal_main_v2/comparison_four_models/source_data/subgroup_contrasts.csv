@@ -1,0 +1,61 @@
+subgroup,n_samples,contrast,contrast_label,difference,lower_95,upper_95
+Plateau background,756,shared_oracle_minus_fno_gamma,Structure gain,-0.0018709815032637404,-0.0062805374431158,0.0011090351661141352
+Plateau background,756,fno_gamma_minus_fno,Prior-information gain,-0.005537875107241477,-0.007694070849646334,-0.003341962270215695
+Plateau background,756,shared_oracle_minus_fno,Joint gain,-0.007408856610505218,-0.010351934488210451,-0.005138326718168515
+Plateau background,756,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0008758490307502649,-0.00038329639913614,0.0018980171682777438
+Plateau background,756,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,-0.0009951324725134755,-0.004896852220061488,0.0017909590293340928
+Plateau background,756,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.006533007579754953,-0.009026651070393412,-0.003810426457402237
+Smooth background,3244,shared_oracle_minus_fno_gamma,Structure gain,-0.0021190385988602498,-0.007908217251417075,0.0022102554396305433
+Smooth background,3244,fno_gamma_minus_fno,Prior-information gain,-0.006886793082761911,-0.01032691038634677,-0.003707876687452356
+Smooth background,3244,shared_oracle_minus_fno,Joint gain,-0.00900583168162216,-0.012470457812027748,-0.00647350007098604
+Smooth background,3244,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0032660068779684776,0.001658499060121154,0.004896416552049937
+Smooth background,3244,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0011469682791082278,-0.0036004903792181495,0.005032146530620747
+Smooth background,3244,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.005739824803653683,-0.008441813436115005,-0.002582439106467949
+Positive jump,2019,shared_oracle_minus_fno_gamma,Structure gain,-0.0026497238097931072,-0.008916203464513044,0.0018557762306393808
+Positive jump,2019,fno_gamma_minus_fno,Prior-information gain,-0.0069347998287833945,-0.010556984136545617,-0.0034270401178650932
+Positive jump,2019,shared_oracle_minus_fno,Joint gain,-0.009584523638576502,-0.013121557782383596,-0.007023302454652271
+Positive jump,2019,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.00342695614151578,0.0015478424622247093,0.0052957117878735934
+Positive jump,2019,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0007772323317226729,-0.004171912826085495,0.004707933363317152
+Positive jump,2019,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.006157567497060722,-0.008810791941029995,-0.002946491879121655
+Negative jump,1981,shared_oracle_minus_fno_gamma,Structure gain,-0.0014835087628458851,-0.006337528338996952,0.0022178119335764467
+Negative jump,1981,fno_gamma_minus_fno,Prior-information gain,-0.00632308404201979,-0.00951076321530429,-0.0036339010723365817
+Negative jump,1981,shared_oracle_minus_fno,Joint gain,-0.007806592804865675,-0.010879191202353054,-0.005170856710859834
+Negative jump,1981,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.002189825204269198,0.0010235540778345397,0.003334567002201706
+Negative jump,1981,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0007063164414233131,-0.0034887420210555245,0.004193386195539856
+Negative jump,1981,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.005616767600596477,-0.0082923151823707,-0.0028039139785491387
+Jump magnitude: low,1365,shared_oracle_minus_fno_gamma,Structure gain,-0.0017234012386278391,-0.010027944960853392,0.004290025732568929
+Jump magnitude: low,1365,fno_gamma_minus_fno,Prior-information gain,-0.010696054056511188,-0.015522539112559042,-0.006357505679396762
+Jump magnitude: low,1365,shared_oracle_minus_fno,Joint gain,-0.012419455295139027,-0.01678197292411663,-0.00909177562856564
+Jump magnitude: low,1365,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0029529086832816576,0.001043399689096991,0.004918333224216398
+Jump magnitude: low,1365,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0012295074446538184,-0.005571723449294873,0.006679594877750305
+Jump magnitude: low,1365,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.00946654661185737,-0.012769550173465767,-0.005544607379966319
+Jump magnitude: middle,1293,shared_oracle_minus_fno_gamma,Structure gain,-0.0013072253955452098,-0.005901961892253315,0.0022550196679523497
+Jump magnitude: middle,1293,fno_gamma_minus_fno,Prior-information gain,-0.004604991269601413,-0.007390639644160735,-0.0018409667399942925
+Jump magnitude: middle,1293,shared_oracle_minus_fno,Joint gain,-0.005912216665146623,-0.008825840027598092,-0.0036629292895973696
+Jump magnitude: middle,1293,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0030448011253795468,0.0016319339722026156,0.00440609326258234
+Jump magnitude: middle,1293,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.001737575729834337,-0.0021787371254876876,0.005106333729572443
+Jump magnitude: middle,1293,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.0028674155397670764,-0.005092576721636184,-0.00017186924990119886
+Jump magnitude: high,1342,shared_oracle_minus_fno_gamma,Structure gain,-0.003163888304026235,-0.006741117713512599,-0.00032862111059925683
+Jump magnitude: high,1342,fno_gamma_minus_fno,Prior-information gain,-0.004450836693608365,-0.006852206948209841,-0.0021838367677001333
+Jump magnitude: high,1342,shared_oracle_minus_fno,Joint gain,-0.0076147249976346,-0.010211091552400301,-0.005526429965508666
+Jump magnitude: high,1342,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0024511326166784912,0.0010765697589540971,0.0037583475342138203
+Jump magnitude: high,1342,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,-0.0007127556873477436,-0.0037044387215081427,0.001645768165850409
+Jump magnitude: high,1342,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.0051635923809561085,-0.007496976564256492,-0.002587302523680232
+Final interface: left,1349,shared_oracle_minus_fno_gamma,Structure gain,-0.0013443368388083021,-0.007580041618487817,0.0036465831294524576
+Final interface: left,1349,fno_gamma_minus_fno,Prior-information gain,-0.005145974725340494,-0.00837198002721381,-0.002376669531362643
+Final interface: left,1349,shared_oracle_minus_fno,Joint gain,-0.006490311564148796,-0.010375355619302966,-0.004029036437730466
+Final interface: left,1349,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.002465118197177679,0.000954874212553659,0.004060975209821616
+Final interface: left,1349,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.001120781358369377,-0.0038699523429329475,0.0057652210290876265
+Final interface: left,1349,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.0040251933669711165,-0.006684216622827209,-0.0015425033229111496
+Final interface: middle,1274,shared_oracle_minus_fno_gamma,Structure gain,-0.0020840500563316863,-0.006580528740833051,0.001926232269627045
+Final interface: middle,1274,fno_gamma_minus_fno,Prior-information gain,-0.007200641460355359,-0.01052108613238596,-0.004015880439819578
+Final interface: middle,1274,shared_oracle_minus_fno,Joint gain,-0.009284691516687045,-0.011177011483553113,-0.007509330206270398
+Final interface: middle,1274,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.002655397541165054,0.0015139314302283463,0.003820787844429865
+Final interface: middle,1274,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0005713474848333677,-0.003237498158880351,0.0040057603686902594
+Final interface: middle,1274,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.006629293975521991,-0.008310440235444094,-0.00420888477755687
+Final interface: right,1377,shared_oracle_minus_fno_gamma,Structure gain,-0.002774170707226624,-0.008645326559230115,0.0010229260222471438
+Final interface: right,1377,fno_gamma_minus_fno,Prior-information gain,-0.00756125869032527,-0.01093524241526033,-0.004377741273783409
+Final interface: right,1377,shared_oracle_minus_fno,Joint gain,-0.010335429397551894,-0.014506272684841424,-0.0068854358533793555
+Final interface: right,1377,shared_oracle_rho0_minus_shared_oracle,Fixed $\rho=0$ minus learned $\rho$,0.0033033022977057985,0.0010545394411329565,0.0052498611721309195
+Final interface: right,1377,shared_oracle_rho0_minus_fno_gamma,Fixed-$\rho$ structure gain,0.0005291315904791746,-0.004407608410871073,0.003919282456467007
+Final interface: right,1377,shared_oracle_rho0_minus_fno,Fixed-$\rho$ joint gain,-0.007032127099846096,-0.01055361869240174,-0.0029928831395544314

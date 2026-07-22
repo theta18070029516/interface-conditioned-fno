@@ -1,0 +1,18 @@
+项目,实际设置
+协议版本与运行标签,v2 / main_v2
+空间区域与训练分辨率,"[-1.0, 1.0] / $N=256$"
+初态界面位置,"$\xi_0 \in [-0.75, 0.25]$"
+输运设置,速度 0.5，终止时间 1.0，故 $\xi_T=\xi_0+0.5$
+跳跃与背景,"所有样本内部非零跳跃，$|[u]| \in [0.5, 1.5]$；平台背景比例 20%"
+数据划分（每个 seed）,"训练 16,000 / 验证 2,000 / 测试 4,000"
+训练与推理网格,"$N=256$ 训练；最优 checkpoint 在 $N=256,512,1024$ 直接推理"
+随机重复,训练 seed 0（共 1 个）
+共同网络主干,4 个谱层，隐藏通道 64，谱模态 16，lifting/projection 通道 128/128，padding=0.5
+优化,AdamW；学习率 1e-03，权重衰减 1e-04，batch size 64，梯度裁剪 1.0
+学习率日程,线性 warm-up 占 5%，末端学习率比例 1%
+训练与 checkpoint,固定 500 epoch；无早停；每 10 epoch 保存；正式推理读取验证相对 $L_2$ 最优 checkpoint
+损失,仅解场 MSE；$\gamma$ 损失关闭
+FNO 输入,3 通道：初态解场及坐标特征
+FNO+$\gamma_T$ 输入,4 通道：FNO 输入加已知解析终态界面 $\gamma_T$
+Oracle-Shared,"4 通道 lifting；固定门控序列 $[\gamma_0,\gamma_T,\gamma_T,\gamma_T,\gamma_T]$；无 $\gamma$ 递推网络和 $\gamma$ 损失"
+Oracle-Shared（固定 $\rho=0$）,与 Oracle-Shared 使用相同四通道输入和固定门控，但所有层、所有通道对均固定 $\rho_{ij}^{\ell}=0$，即 $a_{ij}^{\ell}=b_{ij}^{\ell}=0.5$；参数树中无 `rho_eta`
