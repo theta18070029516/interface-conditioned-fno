@@ -71,6 +71,22 @@ The inflow--outflow boundary condition makes samples with $s=\pm1$ genuine conti
 
 All fixed models are fitted by ridge-regression normal equations. `shared_learnable_rho` jointly optimizes a global scalar $\rho$ and its shared multiplier.
 
+## Deep FNO / Shared Benchmark v2
+
+除上述线性算子验证外，仓库还包含一个 JAX 实现的神经算子基准：在一维常速平流中学习含**区域内部非零间断**的终态解。v2 在 $N=256$ 训练，并在 $N=256/512/1024$ 上测试同分辨率误差与零样本超分辨率。
+
+该基准以五个独立训练 seed、每个 seed 为 16,000/2,000/4,000 个训练/验证/测试样本，统一比较四个模型：
+
+- **FNO**：不提供终态界面先验的基线；
+- **FNO+$\\gamma_{T}$**：将解析终态界面作为额外输入；
+- **Oracle-Shared**：采用固定解析门控序列的结构化谱算子；
+- **Oracle-Shared ($\\rho=0$)**：固定等权双分支的后注册消融模型。
+
+全部模型使用相同的优化设置（学习率 $10^{-3}$、权重衰减 $10^{-4}$、500 epoch），并按验证集相对 $L_{2}$ 选择最佳 checkpoint。比较采用共享测试样本的分层配对 bootstrap，报告相对 $L_{2}$、MSE、界面 MAE、跳跃幅值、总变差、过冲/欠冲及高频误差等指标。
+
+- 基准代码和复现实验说明：[deep_fno_shared_benchmark/README.md](deep_fno_shared_benchmark/README.md)
+- 完整实验结果与图表：[四模型 v2 对比测试报告](deep_fno_shared_benchmark/results/formal_main_v2/comparison_four_models/four_model_main_v2_comparison_report.md)
+
 ## Initial evidence
 
 The committed results are a single-seed smoke experiment at $N=32$ and retained mode budget $M=8$. Lower is better.
