@@ -1,0 +1,32 @@
+# Python and Jupyter runtime state
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.runtime/
+
+# Local environments and editor state
+.venv/
+venv/
+.env
+.vscode/
+.idea/
+
+# Generated training data, checkpoints, prediction arrays, and all non-curated runs
+*.npz
+*.npy
+*.h5
+*.hdf5
+results/*
+!results/formal_main_v2/
+results/formal_main_v2/*
+!results/formal_main_v2/comparison_four_models/
+results/formal_main_v2/comparison_four_models/*
+!results/formal_main_v2/comparison_four_models/four_model_main_v2_comparison_report.md
+!results/formal_main_v2/comparison_four_models/comparison_manifest.json
+!results/formal_main_v2/comparison_four_models/figure_qa.csv
+!results/formal_main_v2/comparison_four_models/figures/
+results/formal_main_v2/comparison_four_models/figures/*
+!results/formal_main_v2/comparison_four_models/figures/*.png
+!results/formal_main_v2/comparison_four_models/source_data/
+results/formal_main_v2/comparison_four_models/source_data/*
+!results/formal_main_v2/comparison_four_models/source_data/*.csv

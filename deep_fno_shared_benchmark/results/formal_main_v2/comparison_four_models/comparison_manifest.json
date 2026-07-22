@@ -1,0 +1,59 @@
+{
+  "bootstrap_levels": [
+    "training_seed",
+    "paired_test_sample"
+  ],
+  "bootstrap_repetitions": 10000,
+  "environment": {
+    "matplotlib": "3.11.0",
+    "numpy": "2.4.6",
+    "python": "3.11.15"
+  },
+  "figures": [
+    "figure1_primary_contrasts",
+    "figure2_superresolution",
+    "figure3_metric_heatmap",
+    "figure4_representative_profiles",
+    "figure5_rho_diagnostics",
+    "figure6_preregistered_subgroups"
+  ],
+  "generated_utc": "2026-07-21T14:17:49.237379+00:00",
+  "models": [
+    "fno",
+    "fno_gamma",
+    "shared_oracle",
+    "shared_oracle_rho0"
+  ],
+  "primary_contrast": "shared_oracle_minus_fno_gamma_relative_l2_at_n256",
+  "protocol_version": 2,
+  "report": "four_model_main_v2_comparison_report.md",
+  "resolutions": [
+    256,
+    512,
+    1024
+  ],
+  "run_tag": "main_v2",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source_data": [
+    "artifact_audit.csv",
+    "figure1_primary_contrasts.csv",
+    "figure2_superresolution.csv",
+    "figure3_metric_heatmap.csv",
+    "figure4_representative_profiles.csv",
+    "figure5_rho_summary.csv",
+    "formal_protocol_v2.csv",
+    "main_results_table.csv",
+    "paired_hierarchical_bootstrap.csv",
+    "subgroup_contrasts.csv",
+    "summary_by_seed.csv",
+    "superresolution_summary.csv"
+  ],
+  "supplemental_ablation_contrast": "shared_oracle_rho0_minus_shared_oracle_relative_l2_at_n256",
+  "supplemental_ablation_status": "post_registered"
+}

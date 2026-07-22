@@ -1,0 +1,10 @@
+# Core runtime and notebook dependencies.
+# GPU users should first install the JAX backend matching their CUDA driver.
+jax>=0.4.30
+optax>=0.2.0
+numpy>=1.26
+matplotlib>=3.8
+pandas>=2.0
+tqdm>=4.66
+nbformat>=5.10
+jupyterlab>=4.0
